@@ -8,7 +8,7 @@ Summary: Intel Graphics Compiler for OpenCL
 
 License: MIT
 URL: https://github.com/intel/intel-graphics-compiler
-Source0: https://github.com/intel/intel-graphics-compiler/archive/v%{version}/%{name}-%{version}.tar.gz
+Source0: https://github.com/intel/intel-graphics-compiler/archive/v%{version}/intel-graphics-compiler-%{version}.tar.gz
 Source1: https://github.com/intel/vc-intrinsics/archive/v0.24.2/vc-intrinsics-0.24.2.tar.gz
 
 BuildRequires: cmake
@@ -32,6 +32,8 @@ BuildRequires: pkgconfig(LLVMSPIRVLib)
 BuildRequires: spirv-llvm-translator
 BuildRequires: pkgconfig(SPIRV-Headers)
 BuildRequires: pkgconfig(SPIRV-Tools)
+
+%rename intel-graphics-compiler = %{version}-%{release}
 
 Requires:      %{name}-libs%{?_isa} = %{version}-%{release}
 

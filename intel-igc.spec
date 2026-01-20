@@ -15,7 +15,7 @@ BuildRequires: cmake
 BuildRequires: make
 BuildRequires: git
 BuildRequires: llvm-devel
-BuildRequires: lld-devel
+BuildRequires: cmake(LLD)
 BuildRequires: clang
 #BuildRequires: clang-tools-extra
 BuildRequires: flex

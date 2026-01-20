@@ -26,6 +26,7 @@ BuildRequires: python-pyyaml
 BuildRequires: pkgconfig(zlib)
 BuildRequires: intel-opencl-clang-devel
 BuildRequires: pkgconfig(libffi)
+BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: libunwind-devel
 BuildRequires: pkgconfig(libzstd)
 BuildRequires: pkgconfig(LLVMSPIRVLib)
@@ -78,12 +79,7 @@ tar -xf %{SOURCE1}
 %endif
     -DIGC_OPTION__LINK_KHRONOS_SPIRV_TRANSLATOR=ON \
     -DIGC_BUILD__VC_ENABLED=ON \
-    -DIGC_OPTION__SPIRV_TRANSLATOR_MODE=Prebuilds \
-    -DIGC_OPTION__CLANG_MODE=Prebuilds \
-    -DIGC_OPTION__LLD_MODE=Prebuilds \
-    -DIGC_OPTION__LLVM_MODE=Prebuilds \
-    -DIGC_OPTION__SPIRV_TOOLS_MODE=Prebuilds \
-    -DIGC_OPTION__USE_PREINSTALLED_SPIRV_HEADERS=ON \
+    -DLLVM_ROOT=%{_libdir}/llvm%{?llvm_compat}/ \
     -DIGC_OPTION__VC_INTRINSICS_MODE=Source \
     -DINSTALL_GENX_IR=ON \
     -Wno-dev

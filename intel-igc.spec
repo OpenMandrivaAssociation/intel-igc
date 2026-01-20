@@ -33,7 +33,7 @@ BuildRequires: spirv-llvm-translator
 BuildRequires: pkgconfig(SPIRV-Headers)
 BuildRequires: pkgconfig(SPIRV-Tools)
 
-%rename intel-graphics-compiler = %{version}-%{release}
+%rename intel-graphics-compiler
 
 Requires:      %{name}-libs%{?_isa} = %{version}-%{release}
 

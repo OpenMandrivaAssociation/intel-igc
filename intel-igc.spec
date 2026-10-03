@@ -6,7 +6,9 @@
 
 %global _disable_lto 1
 # -flto on a bundled LLVM blows the link and has miscompiled IGC before.
-%global optflags %(echo %{optflags} | sed -e 's/ -flto//g') -w
+# -g3 does not fit the builder disk: the object tree hit ENOSPC at 85%.
+%global optflags %(echo %{optflags} | sed -e 's/ -flto//g; s/ -g3//g; s/ -gdwarf-4//g') -w -g0
+%global debug_package %{nil}
 # dwz runs out of memory on the statically linked LLVM inside libigc.
 %global _find_debuginfo_dwz_opts %{nil}
 
@@ -122,6 +124,14 @@ git -C %{_builddir}/llvm-project config user.name "build"
 git -C %{_builddir}/llvm-project config gc.auto 0
 git -C %{_builddir}/llvm-project add -f clang/ llvm/docs
 git -C %{_builddir}/llvm-project commit -q -m "llvmorg-%{llvm_ver}"
+
+# IGC appends -g to the Release flags. -g0 has to be the last -g* flag.
+sed -i \
+	-e 's/\(CMAKE_C_FLAGS_RELEASE}\) -g/\1 -g0/' \
+	-e 's/\(CMAKE_CXX_FLAGS_RELEASE}\) -g/\1 -g0/' \
+	-e 's/\(CMAKE_SHARED_LINKER_FLAGS_RELEASE}\) -g/\1 -g0/' \
+	-e 's/\(CMAKE_EXE_LINKER_FLAGS_RELEASE}\) -g/\1 -g0/' \
+	IGC/CMakeLists.txt
 
 %build
 # Source-mode LLVM 22 inside IGC is validated with gcc (the Fedora RHEL build).

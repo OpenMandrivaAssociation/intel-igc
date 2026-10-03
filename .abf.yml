@@ -1,3 +1,8 @@
 sources:
-  intel-graphics-compiler-2.27.10.tar.gz: 17e49ec549b43951f00ce6b38fbc6cad95c38ac9
-  vc-intrinsics-0.24.2.tar.gz: 520969d0fc28498c72acee908b0a0fefac8d677f
+  intel-graphics-compiler-2.41.9.tar.gz: 255f118253c9e175194a2037bf297a3477f06a7f
+  vc-intrinsics-27f7c4f34738f5eaf7a045b77edf8d9e034443d8.tar.gz: f004fc429f1fae3fe99af6d6bd93bb0acab682c2
+  intel-opencl-clang-b953eceebb0abc6ea954a14545420e3f97540a77.tar.gz: fca46610766a6023fa6f5f8756797851d99cf372
+  SPIRV-LLVM-Translator-27afcfe385cf542197dfde8c658e1f5ff53fc2fc.tar.gz: 8a12c6befa9e9bb534c7c89118bf760317a1dfdc
+  SPIRV-Headers-575b6512579ebde466ed3dfc04e413439d14d95d.tar.gz: 966011342e64128e357c37e680fb6cbac221c9f0
+  SPIRV-Tools-f80351511e9c4672e284842c7b124315c511078a.tar.gz: eae8bb729008cd998a2395ff83449a7f0ee7d6c9
+  llvmorg-22.1.8.tar.gz: 263f8a1aedaa02f3830da23b31f712c2722bb1aa

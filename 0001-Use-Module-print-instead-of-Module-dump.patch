@@ -1,0 +1,36 @@
+From e24be9c7f0b7c0a531b3c18eeca0e9a4457a6321 Mon Sep 17 00:00:00 2001
+From: Pavel Androniychuk <pavel.androniychuk@intel.com>
+Date: Fri, 18 Sep 2026 11:11:30 -0700
+Subject: [PATCH] Use Module::print instead of Module::dump in
+ TranslateSPIRVToLLVM
+
+llvm::Module::dump() is only compiled into LLVM when assertions or
+LLVM_ENABLE_DUMP are enabled. Since the IGC flags refactor (167a0d905)
+IGC_IS_FLAG_ENABLED(ShaderDumpTranslationOnly) is a runtime check, so the
+call is no longer dead-code-eliminated and linking libigc against a
+release-mode distro LLVM fails with:
+
+  undefined reference to 'llvm::Module::dump() const'
+
+Module::print(errs(), nullptr) is always available and produces the same
+output.
+---
+ IGC/AdaptorOCL/dllInterfaceCompute.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/IGC/AdaptorOCL/dllInterfaceCompute.cpp b/IGC/AdaptorOCL/dllInterfaceCompute.cpp
+index b50ed3f8b..9b2cf424a 100644
+--- a/IGC/AdaptorOCL/dllInterfaceCompute.cpp
++++ b/IGC/AdaptorOCL/dllInterfaceCompute.cpp
+@@ -454,7 +454,7 @@ bool TranslateSPIRVToLLVM(const STB_TranslateInputArgs &InputArgs, llvm::LLVMCon
+     GenerateSPIRVExtensionsMD(Context, *LLVMModule, SPIRVBinary.str());
+ 
+     if (IGC_IS_FLAG_ENABLED(ShaderDumpTranslationOnly))
+-      LLVMModule->dump();
++      LLVMModule->print(llvm::errs(), nullptr);
+   }
+ 
+   return success;
+-- 
+2.53.0
+

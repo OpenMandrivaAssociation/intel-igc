@@ -37,7 +37,12 @@ Source5:	https://github.com/KhronosGroup/SPIRV-Tools/archive/%{spirv_tools_commi
 Source6:	https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-%{llvm_ver}.tar.gz
 Patch0:		0001-Use-Module-print-instead-of-Module-dump.patch
 
-# Intel GPU ISA only. znver1 is OpenMandriva's optimized x86_64.
+# IGC calls aarch64 LinuxARM. x86_64 and znver1 are Linux64.
+%ifarch aarch64
+%global igc_target_arch LinuxARM
+%else
+%global igc_target_arch Linux64
+%endif
 
 BuildRequires:	cmake
 BuildRequires:	ninja
@@ -151,7 +156,7 @@ export LDFLAGS="$(printf '%s' '%{build_ldflags}' | sed -e 's/-Wl,--no-undefined/
 	-DFETCHCONTENT_FULLY_DISCONNECTED=ON \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DIGC_API_PATCH_VERSION=%{igc_patch} \
-	-DIGC_OPTION__ARCHITECTURE_TARGET=Linux64 \
+	-DIGC_OPTION__ARCHITECTURE_TARGET=%{igc_target_arch} \
 	-DIGC_BUILD__VC_ENABLED=ON \
 	-DIGC_OPTION__VC_INTRINSICS_MODE=Source \
 	-DVC_INTRINSICS_SRC="%{_builddir}/vc-intrinsics-%{vc_commit}" \

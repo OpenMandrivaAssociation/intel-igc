@@ -38,7 +38,6 @@ Source6:	https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-%{llvm_v
 Patch0:		0001-Use-Module-print-instead-of-Module-dump.patch
 
 # Intel GPU ISA only. znver1 is OpenMandriva's optimized x86_64.
-ExclusiveArch:	x86_64 znver1
 
 BuildRequires:	cmake
 BuildRequires:	ninja
